@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:latest
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'library'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: '8!K$p#2*'
+      MYSQL_ROOT_PASSWORD: '8!K$p#2*'
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spring-boot-app
+    restart: always
+    ports:
+      - '8080:8080'
+    depends_on:
+      - db
+
+volumes:
+  mysql_data:
